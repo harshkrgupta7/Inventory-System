@@ -1,0 +1,260 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f5f5;
+  color: #1a1a1a;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #0a0a0a;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  border-bottom: 3px solid #ff9f31;
+}
+
+.navbar-brand a {
+  color: #ff9f31;
+  text-decoration: none;
+  font-size: 1.4rem;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.navbar-brand a:hover {
+  color: #ffb85c;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navbar-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.navbar-links a:hover {
+  color: #ff9f31;
+}
+
+.navbar-user {
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.navbar-role {
+  background-color: #ff9f31;
+  color: #0a0a0a;
+  padding: 0.25rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.btn-logout {
+  background-color: transparent;
+  border: 2px solid #ff9f31;
+  color: #ff9f31;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-logout:hover {
+  background-color: #ff9f31;
+  color: #0a0a0a;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Auth Pages */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 73px);
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+}
+
+.auth-box {
+  background: #141414;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  width: 100%;
+  max-width: 420px;
+  border: 1px solid #2a2a2a;
+  border-top: 4px solid #ff9f31;
+}
+
+.auth-box h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
+  color: #ffffff;
+}
+
+.auth-subtitle {
+  color: #ff9f31;
+  margin-bottom: 1.8rem;
+  font-size: 0.95rem;
+}
+
+/* Form */
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: #1f1f1f;
+  border: 1.5px solid #333;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #ffffff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.form-group input::placeholder {
+  color: #666;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #ff9f31;
+  box-shadow: 0 0 0 3px rgba(255, 159, 49, 0.15);
+}
+
+.form-group select {
+  cursor: pointer;
+}
+
+.form-group select option {
+  background-color: #1f1f1f;
+  color: #fff;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 0.85rem;
+  background-color: #ff9f31;
+  color: #0a0a0a;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary:hover {
+  background-color: #ffb85c;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(255, 159, 49, 0.4);
+}
+
+.btn-primary:disabled {
+  background-color: #555;
+  color: #999;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Error */
+.error-msg {
+  background-color: rgba(220, 53, 69, 0.15);
+  color: #ff6b7a;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  border-left: 4px solid #ff6b7a;
+}
+
+/* Auth Link */
+.auth-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #999;
+}
+
+.auth-link a {
+  color: #ff9f31;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-link a:hover {
+  color: #ffb85c;
+  text-decoration: underline;
+}
+
+/* Dashboard */
+.dashboard {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+  border-left: 5px solid #ff9f31;
+}
+
+.dashboard h1 {
+  font-size: 1.8rem;
+  color: #0a0a0a;
+  margin-bottom: 1rem;
+}
+
+.dashboard p {
+  color: #555;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+/* Loading */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 1.2rem;
+  color: #ff9f31;
+  background-color: #0a0a0a;
+}
