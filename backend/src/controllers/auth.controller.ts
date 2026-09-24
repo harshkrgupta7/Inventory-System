@@ -7,7 +7,7 @@ import { users } from "../db/schema/user.schema";
 import { AuthRequest } from "../types";
 
 // Generate JWT Token
-const generateToken = (id: string, email: string, role: string): string => {
+const generateToken = (id: number, email: string, role: string): string => {
     return jwt.sign(
         { id, email, role },
         process.env.JWT_SECRET as string,
@@ -122,6 +122,14 @@ export const login = async (req: Request, res: Response): Promise<void> => {
             return;
         }
 
+        if (user.suspendedAt) {
+            res.status(403).json({
+                success: false,
+                message: "This account has been suspended",
+            });
+            return;
+        }
+
         // Compare password
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
@@ -195,6 +203,99 @@ export const getMe = async (
         });
     } catch (error) {
         console.error("GetMe Error:", error);
+        res.status(500).json({
+            success: false,
+            message: "Internal server error",
+        });
+    }
+};
+
+// =============================================
+// @desc    Update Profile
+// @route   PUT /api/auth/profile
+// @access  Private
+// =============================================
+export const updateProfile = async (
+    req: AuthRequest,
+    res: Response
+): Promise<void> => {
+    try {
+        const { name, email, currentPassword, newPassword } = req.body;
+        const userId = req.user!.id;
+
+        const [currentUser] = await db
+            .select()
+            .from(users)
+            .where(eq(users.id, userId))
+            .limit(1);
+
+        if (!currentUser) {
+            res.status(404).json({
+                success: false,
+                message: "User not found",
+            });
+            return;
+        }
+
+        if (newPassword && currentPassword) {
+            const isPasswordValid = await bcrypt.compare(currentPassword, currentUser.password);
+
+            if (!isPasswordValid) {
+                res.status(401).json({
+                    success: false,
+                    message: "Current password is incorrect",
+                });
+                return;
+            }
+        }
+
+        const updateData: Record<string, any> = {
+            updatedAt: new Date(),
+        };
+
+        if (name !== undefined) updateData.name = name;
+        if (email !== undefined) {
+            if (email !== currentUser.email) {
+                const existingUser = await db
+                    .select()
+                    .from(users)
+                    .where(eq(users.email, email))
+                    .limit(1);
+
+                if (existingUser.length > 0) {
+                    res.status(409).json({
+                        success: false,
+                        message: "Email already in use",
+                    });
+                    return;
+                }
+            }
+            updateData.email = email;
+        }
+        if (newPassword && currentPassword) {
+            const salt = await bcrypt.genSalt(12);
+            updateData.password = await bcrypt.hash(newPassword, salt);
+        }
+
+        const [updatedUser] = await db
+            .update(users)
+            .set(updateData)
+            .where(eq(users.id, userId))
+            .returning({
+                id: users.id,
+                name: users.name,
+                email: users.email,
+                role: users.role,
+                createdAt: users.createdAt,
+            });
+
+        res.status(200).json({
+            success: true,
+            message: "Profile updated successfully",
+            data: { user: updatedUser },
+        });
+    } catch (error) {
+        console.error("UpdateProfile Error:", error);
         res.status(500).json({
             success: false,
             message: "Internal server error",
